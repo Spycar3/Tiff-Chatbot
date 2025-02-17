@@ -100,7 +100,7 @@ VOICE =  "en-IE-EmilyNeural" #"en-IE-EmilyNeural" "en-PH-RosaNeural" "en-GB-Mais
 OUTPUT_FILE = "output.mp3"
 
 async def generate_speech(text):
-    communicate = edge_tts.Communicate(text, VOICE, rate='+20%')
+    communicate = edge_tts.Communicate(text, VOICE, rate='+20%', pitch='+10Hz')
     await communicate.save(OUTPUT_FILE)
 
 # Play the generated Text to Speech audio file and the Talking animation.
