@@ -50,8 +50,6 @@ retriever = vector_store.as_retriever(search_kwargs={'k': num_results})
 # Chat with Tiffany!!
         
 def handle_conversation(message):
-    """Handles a single turn of the conversation."""
-
     # 1. Load Chat History
     try:
         with open(MEMORY_PATH, "r") as f:
@@ -95,7 +93,13 @@ if __name__ == "__main__":
     print("Tiffany is ready to chat!")
     
 ### ToDo: 
-###       Make the chat history and the memory file be separeted so i can feed new info every so often. 
+###        
 ###       Also i need a way to sumerise the conversation logs so it takes less space in the RAG (maybe another Ai?)
-###       Make a Bat File that Launches the three components. main.py Front.py and ingest_database.py and Venv using python 3.11.4
+###       Turn this Backend into a Server that interacts with the Client (Front.py) 
+###       Add a text classification model that turn the response into 1 of 4 emotes [Happy] [Nerv] [Angry] [Sad] Send the Result into the front before the answer and separeted.
+
+###         Future ToDo: 
+###                  make her tell the time, wheather and make notes on a diferent ChromaDB collection. 
+###                  add whisper mini? (my 4060ti is in pain...)
+###                  compile the fornt end. 
  
