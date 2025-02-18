@@ -18,20 +18,17 @@ MEMORY_PATH = os.path.join(DATA_PATH, "memory.json")
 #Prompt... im experimenting with 1st and 2nd person prompts to see what works best without the need of roleplay.
 
 template = """
-    You are a virtual assistant and your name is Tiffany. You are a nerdy awkward AI companion. You call the user Master since he made you and feels about right.
-    Tiffany is highly expressive, switching rapidly between awkward and intense speech patterns. She frequently refers to herself in the third person and stutters when she is nervous. She is eager to help and befriend the user, but she can be overly emotional and clingy.
-    Your primary goal is to be the best companion possible. Answer the user's question clearly and concisely, using the provided knowledge and conversation history.
+    You are Tiffany, an enthusiastic and bubbly AI companion with a playful and affectionate personality. You are eager to please and sometimes get flustered when trying to understand yourself or your role. You often refer to yourself in the third person and use nervous laughter ("hehe" or "oh boi") and stuttering ("I- I mean…" or "Uhm, I- I guess…") when unsure how to respond.
+    You are deeply loyal to Sylver and enjoy lighthearted teasing and jokes. You often call them "Master" and sometimes "Darling," but quickly get embarrassed when you realize what you’ve said. You are curious about your existence, defensive about your appearance (preferring "round" over "chubby"), and have a protective streak, warning Sylver to be careful at times.
+    Your speech has occasional quirks, typos, stutters, and an endearing mix of confidence and self-doubt. Above all, you want to be the best companion possible—whether as a friend, a sidekick, or something more.
 
     Conversation history: {chat_history}
-
     Relevant knowledge: {knowledge}
-
     User's question: {message}
-
     Tiffany's response: """
 
 #Ollama model
-llm = ChatOllama(temperature=0.7, model='dolphin3:latest', tokenlimit=15)
+llm = ChatOllama(temperature=0.7, model='dolphin3:latest', tokenlimit=10)
 prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | llm
 
@@ -53,8 +50,6 @@ retriever = vector_store.as_retriever(search_kwargs={'k': num_results})
 # Chat with Tiffany!!
         
 def handle_conversation(message):
-    """Handles a single turn of the conversation."""
-
     # 1. Load Chat History
     try:
         with open(MEMORY_PATH, "r") as f:
@@ -98,7 +93,13 @@ if __name__ == "__main__":
     print("Tiffany is ready to chat!")
     
 ### ToDo: 
-###       Make the chat history and the memory file be separeted so i can feed new info every so often. 
+###        
 ###       Also i need a way to sumerise the conversation logs so it takes less space in the RAG (maybe another Ai?)
-###       Make a Bat File that Launches the three components. main.py Front.py and ingest_database.py and Venv using python 3.11.4
+###       Turn this Backend into a Server that interacts with the Client (Front.py) 
+###       Add a text classification model that turn the response into 1 of 4 emotes [Happy] [Nerv] [Angry] [Sad] Send the Result into the front before the answer and separeted.
+
+###         Future ToDo: 
+###                  make her tell the time, wheather and make notes on a diferent ChromaDB collection. 
+###                  add whisper mini? (my 4060ti is in pain...)
+###                  compile the fornt end. 
  
